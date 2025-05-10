@@ -267,13 +267,13 @@ ___
 ### Installing package with composer
 
 ```sh
-docker run --rm -v $(pwd)/../:/app composer require symfony/yaml
+docker run --rm -v $(pwd)/../:/var/www/html/ composer require symfony/yaml
 ```
 
 ### Updating PHP dependencies with composer
 
 ```sh
-docker run --rm -v $(pwd)/../app:/app composer update
+docker run --rm -v $(pwd)/../:/var/www/html/ composer update
 ```
 
 ### Generating PHP API documentation
