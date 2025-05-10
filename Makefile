@@ -76,6 +76,10 @@ test: code-sniff
 	@docker-compose exec -T php ./app/vendor/bin/phpunit --colors=always --configuration ./app/
 	@make resetOwner
 
+laravel-migrate:
+	@echo "Migrating now..."
+	@docker-compose exec -T php php artisan migrate
+
 resetOwner:
 	@$(shell chown -Rf $(SUDO_USER):$(shell id -g -n $(SUDO_USER)) $(MYSQL_DUMPS_DIR) "$(shell pwd)/etc/ssl" "$(shell pwd)/web/app" 2> /dev/null)
 
