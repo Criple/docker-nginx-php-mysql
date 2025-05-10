@@ -69,18 +69,13 @@ RUN apt-get update && apt-get upgrade -y \
         && rm -rf /var/lib/apt/lists/* \
         && rm -rf /tmp/* /var/tmp/*
 
-# Создаём пользователя и группу www для приложения Laravel
+# Создаём пользователя и группу для приложения Laravel
 RUN groupadd project_users
 RUN useradd -g project_users CURRENT_USER
-#RUN useradd -u 1000 -ms /bin/bash -g mark mark
+
 # Копируем содержимое текущего каталога в рабочую директорию
 COPY --chown=CURRENT_USER:project_users . /var/www/html
 
-#RUN chown -R root:root /var/www/html
-# Меняем пользователя на www
-#USER root
-#RUN groupadd -g 1000 app &&  www-data app
-#RUN useradd -u 1000 -ms /bin/bash -g app app
 USER CURRENT_USER
 # В контейнере открываем 9000 порт и запускаем сервер php-fpm
 EXPOSE 9000
