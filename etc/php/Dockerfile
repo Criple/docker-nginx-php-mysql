@@ -3,7 +3,7 @@ FROM php:8.3-fpm
 # Устанавливаем рабочую директорию
 WORKDIR /var/www/html
 
-ENV CURRENT_USER     "$USER"
+ARG CURRENT_USER
 
 # Устанавливаем зависимости
 RUN apt-get update && apt-get upgrade -y \
@@ -71,12 +71,12 @@ RUN apt-get update && apt-get upgrade -y \
 
 # Создаём пользователя и группу для приложения Laravel
 RUN groupadd project_users
-RUN useradd -g project_users CURRENT_USER
+RUN useradd -g project_users ${CURRENT_USER}
 
 # Копируем содержимое текущего каталога в рабочую директорию
-COPY --chown=CURRENT_USER:project_users . /var/www/html
+COPY --chown=${CURRENT_USER}:project_users . /var/www/html
 
-USER CURRENT_USER
+USER ${CURRENT_USER}
 # В контейнере открываем 9000 порт и запускаем сервер php-fpm
 EXPOSE 9000
 CMD ["php-fpm"]
