@@ -80,6 +80,14 @@ laravel-migrate:
 	@echo "Migrating now..."
 	@docker-compose exec -T php php artisan migrate
 
+create-symfony-app:
+	@echo "Installing symfony app..."
+	@docker run --rm -v $(shell pwd)/../:/app composer create-project symfony/skeleton:"7.2.x" my_project_directory
+	@docker run --rm -v $(shell pwd)/../my_project_directory/:/app composer require webapp
+	@echo "$(SUDO_PASSWORD)" | sudo -S -k chown -R $(USER):$(USER) $(shell pwd)/../my_project_directory
+	@mv $(shell pwd)/../my_project_directory/{.,}* $(shell pwd)/../
+	@rm -r $(shell pwd)/../my_project_directory
+
 resetOwner:
 	@$(shell chown -Rf $(SUDO_USER):$(shell id -g -n $(SUDO_USER)) $(MYSQL_DUMPS_DIR) "$(shell pwd)/etc/ssl" "$(shell pwd)/web/app" 2> /dev/null)
 
