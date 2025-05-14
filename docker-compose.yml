@@ -34,7 +34,7 @@ services:
         working_dir: "/var/www/html"
         volumes:
             - "./../:/var/www/html"
-        command: create-project symfony/skeleton:"7.2.x" my_project_directory
+        command: install
     myadmin:
         image: phpmyadmin/phpmyadmin
         container_name: phpmyadmin
