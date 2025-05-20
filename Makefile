@@ -76,6 +76,10 @@ test: code-sniff
 	@docker-compose exec -T php ./app/vendor/bin/phpunit --colors=always --configuration ./app/
 	@make resetOwner
 
+laravel-key-generate:
+	@echo "Generating keys..."
+	@docker-compose exec -T php php artisan key:generate
+
 laravel-migrate:
 	@echo "Migrating now..."
 	@docker-compose exec -T php php artisan migrate
