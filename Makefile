@@ -76,6 +76,11 @@ test: code-sniff
 	@docker-compose exec -T php ./app/vendor/bin/phpunit --colors=always --configuration ./app/
 	@make resetOwner
 
+create-laravel-app:
+	@echo "Installing laravel app..."
+	@docker run --rm -v $(shell pwd)/../:/app composer create-project laravel/laravel:^12.0 $(shell pwd)/../
+	@echo "$(SUDO_PASSWORD)" | sudo -S -k chown -R $(USER):$(USER) $(shell pwd)/../
+
 laravel-key-generate:
 	@echo "Generating keys..."
 	@docker-compose exec -T php php artisan key:generate
