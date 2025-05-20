@@ -78,8 +78,10 @@ test: code-sniff
 
 create-laravel-app:
 	@echo "Installing laravel app..."
-	@docker run --rm -v $(shell pwd)/../:/app composer create-project laravel/laravel:^12.0 $(shell pwd)/../
+	@docker run --rm -v $(shell pwd)/../:/app composer create-project laravel/laravel:^12.0 example-app
 	@echo "$(SUDO_PASSWORD)" | sudo -S -k chown -R $(USER):$(USER) $(shell pwd)/../
+	@mv $(shell pwd)/../example-app/{.,}* $(shell pwd)/../
+	@rm -r $(shell pwd)/../example-app
 
 laravel-key-generate:
 	@echo "Generating keys..."
